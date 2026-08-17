@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-primary: #0A0A0B;
+    --bg-surface: #121215;
+    --bg-card: #18181C;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --accent-red: #E50914;
+    --accent-red-hover: #B91C1C;
+    --border-dark: #27272A;
+    --border-accent: rgba(229, 9, 20, 0.3);
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Syne', sans-serif;
+  }
+}
+
+/* Spider-web & Architectural Grid Background Pattern */
+.bg-web-grid {
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(229, 9, 20, 0.04) 0%, transparent 60%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
+}
+
+.bg-web-radial {
+  background-image: radial-gradient(ellipse at top center, rgba(229, 9, 20, 0.12) 0%, rgba(10, 10, 11, 0.95) 70%);
+}
+
+/* Thin Web Line Graphic */
+.web-line {
+  background: linear-gradient(180deg, rgba(229, 9, 20, 0.8) 0%, rgba(255, 255, 255, 0.15) 60%, transparent 100%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0A0B;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272A;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E50914;
+}
+
+/* Custom Selection */
+::selection {
+  background: #E50914;
+  color: #FFFFFF;
+}
+
+/* Red Accent Glow (Subtle & Editorial) */
+.editorial-glow {
+  box-shadow: 0 0 30px -10px rgba(229, 9, 20, 0.25);
+}
+
+/* Perspective Container for 3D Reveals */
+.perspective-1000 {
+  perspective: 1000px;
+}
