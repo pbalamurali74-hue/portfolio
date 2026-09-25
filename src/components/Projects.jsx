@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { featuredProjects } from '../data/portfolioData';
 import { useGsapContext } from '../hooks/useGsapContext';
 import Tilt3D from './Tilt3D';
-import { Github, ExternalLink, Cpu, Info, CheckCircle2, X } from 'lucide-react';
+import { Github, ExternalLink, Cpu, Info, CheckCircle2, X, Sparkles, Lightbulb, Target } from 'lucide-react';
 
 export default function Projects() {
   const scopeRef = useRef(null);
@@ -96,21 +96,68 @@ export default function Projects() {
                           )}
                         </div>
 
-                        {/* Title */}
-                        <h3 className="text-2xl sm:text-3xl font-bold font-display text-white group-hover:text-[#E50914] transition-colors duration-300">
-                          {project.title}
-                        </h3>
-
-                        {/* Tagline & Problem Statement */}
-                        <div className="space-y-3">
-                          <p className="text-slate-200 text-base font-medium">
+                        {/* Title & Tagline */}
+                        <div>
+                          <h3 className="text-2xl sm:text-3xl font-bold font-display text-white group-hover:text-[#E50914] transition-colors duration-300">
+                            {project.title}
+                          </h3>
+                          <p className="text-slate-300 text-sm sm:text-base font-medium mt-1">
                             {project.tagline}
                           </p>
-                          <p className="text-slate-400 text-sm leading-relaxed">
+                        </div>
+
+                        {/* Quantified Metrics Strip */}
+                        {project.metrics && project.metrics.length > 0 && (
+                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                            {project.metrics.map((metric, mIdx) => (
+                              <div
+                                key={mIdx}
+                                className="bg-[#18181C]/90 border border-[#27272A] rounded-xl px-3 py-2 flex flex-col justify-center group-hover:border-[#E50914]/40 transition-colors"
+                              >
+                                <span className="text-[10px] uppercase tracking-wider font-mono text-slate-400">
+                                  {metric.label}
+                                </span>
+                                <span className="text-xs sm:text-sm font-bold text-[#E50914] font-mono mt-0.5 truncate">
+                                  {metric.value}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Core Concept / Main Idea */}
+                        {project.mainIdea && (
+                          <div className="p-3.5 rounded-xl bg-[#18181C]/70 border border-[#27272A] space-y-1">
+                            <div className="flex items-center space-x-2 text-xs font-mono font-bold uppercase text-slate-300">
+                              <Lightbulb className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                              <span>Core Concept:</span>
+                            </div>
+                            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed pl-5">
+                              {project.mainIdea}
+                            </p>
+                          </div>
+                        )}
+
+                        {/* Standout Innovation / Unique Feature */}
+                        {project.uniqueFeature && (
+                          <div className="bg-gradient-to-r from-[#E50914]/15 via-[#18181C] to-[#18181C] p-3.5 rounded-xl border border-[#E50914]/40 shadow-sm space-y-1">
+                            <div className="flex items-center space-x-2 text-xs font-mono font-bold uppercase text-[#E50914]">
+                              <Sparkles className="w-3.5 h-3.5 text-[#E50914] shrink-0" />
+                              <span>Standout Innovation:</span>
+                            </div>
+                            <p className="text-slate-200 text-xs sm:text-sm leading-relaxed pl-5 font-medium">
+                              {project.uniqueFeature}
+                            </p>
+                          </div>
+                        )}
+
+                        {/* Problem & Built Statement */}
+                        <div className="space-y-3">
+                          <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
                             <span className="text-slate-300 font-semibold">Problem: </span>
                             {project.problem}
                           </p>
-                          <p className="text-slate-300 text-sm leading-relaxed bg-[#18181C] p-4 rounded-xl border border-[#27272A]">
+                          <p className="text-slate-300 text-xs sm:text-sm leading-relaxed bg-[#18181C] p-3.5 rounded-xl border border-[#27272A]">
                             <span className="text-[#E50914] font-semibold">Implementation: </span>
                             {project.built}
                           </p>
@@ -202,28 +249,84 @@ export default function Projects() {
 
       {/* Modal Drawer for Project Architecture Details */}
       {activeModalProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-          <div className="bg-[#121215] border border-[#27272A] rounded-2xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+          <div className="bg-[#121215] border border-[#27272A] rounded-2xl max-w-2xl w-full p-6 sm:p-8 space-y-6 shadow-2xl relative my-8 max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setActiveModalProject(null)}
-              className="absolute top-6 right-6 p-2 rounded-lg bg-[#18181C] text-slate-400 hover:text-white hover:bg-[#27272A]"
+              className="absolute top-6 right-6 p-2 rounded-lg bg-[#18181C] text-slate-400 hover:text-white hover:bg-[#27272A] transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="space-y-2">
-              <span className="px-3 py-1 rounded-full bg-[#E50914]/10 text-[#E50914] text-xs font-mono font-bold">
+            <div className="space-y-2 pr-10">
+              <span className="px-3 py-1 rounded-full bg-[#E50914]/10 text-[#E50914] text-xs font-mono font-bold uppercase tracking-wider">
                 {activeModalProject.badge}
               </span>
-              <h3 className="text-2xl font-bold font-display text-white">
+              <h3 className="text-2xl sm:text-3xl font-bold font-display text-white">
                 {activeModalProject.title}
               </h3>
               <p className="text-slate-300 text-sm">{activeModalProject.tagline}</p>
             </div>
 
+            {/* Metrics Chips in Modal */}
+            {activeModalProject.metrics && activeModalProject.metrics.length > 0 && (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                {activeModalProject.metrics.map((metric, mIdx) => (
+                  <div
+                    key={mIdx}
+                    className="bg-[#18181C] border border-[#27272A] rounded-xl px-3 py-2.5 flex flex-col justify-center"
+                  >
+                    <span className="text-[10px] uppercase tracking-wider font-mono text-slate-400">
+                      {metric.label}
+                    </span>
+                    <span className="text-sm font-bold text-[#E50914] font-mono mt-0.5">
+                      {metric.value}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Main Idea in Modal */}
+            {activeModalProject.mainIdea && (
+              <div className="p-4 rounded-xl bg-[#18181C]/70 border border-[#27272A] space-y-1.5">
+                <div className="flex items-center space-x-2 text-xs font-mono font-bold uppercase text-slate-300">
+                  <Lightbulb className="w-4 h-4 text-amber-400 shrink-0" />
+                  <span>Main Idea & Problem Thesis:</span>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed pl-6">
+                  {activeModalProject.mainIdea}
+                </p>
+              </div>
+            )}
+
+            {/* Unique Feature in Modal */}
+            {activeModalProject.uniqueFeature && (
+              <div className="bg-gradient-to-r from-[#E50914]/15 via-[#18181C] to-[#18181C] p-4 rounded-xl border border-[#E50914]/40 space-y-1.5">
+                <div className="flex items-center space-x-2 text-xs font-mono font-bold uppercase text-[#E50914]">
+                  <Sparkles className="w-4 h-4 text-[#E50914] shrink-0" />
+                  <span>Standout Unique Feature:</span>
+                </div>
+                <p className="text-slate-200 text-sm leading-relaxed pl-6 font-medium">
+                  {activeModalProject.uniqueFeature}
+                </p>
+              </div>
+            )}
+
+            {/* Implementation Summary */}
+            <div className="space-y-2 border-t border-[#27272A] pt-4">
+              <h4 className="text-xs font-mono uppercase text-[#E50914] font-bold">
+                Implementation Details:
+              </h4>
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed bg-[#18181C] p-3.5 rounded-xl border border-[#27272A]">
+                {activeModalProject.built}
+              </p>
+            </div>
+
+            {/* Pipeline Execution Steps */}
             <div className="space-y-3 border-t border-[#27272A] pt-4">
               <h4 className="text-xs font-mono uppercase text-[#E50914] font-bold">
-                Pipeline Execution Steps:
+                System Architecture Pipeline:
               </h4>
               <ul className="space-y-2">
                 {activeModalProject.architecture?.map((step, i) => (
@@ -241,7 +344,7 @@ export default function Projects() {
                   href={activeModalProject.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center space-x-2 px-4 py-2 rounded-full bg-[#18181C] text-xs font-bold text-white hover:bg-[#27272A]"
+                  className="flex items-center space-x-2 px-4 py-2 rounded-full bg-[#18181C] text-xs font-bold text-white hover:bg-[#27272A] transition-colors"
                 >
                   <Github className="w-4 h-4 text-[#E50914]" />
                   <span>GitHub Repository</span>
@@ -252,7 +355,7 @@ export default function Projects() {
                   href={activeModalProject.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center space-x-2 px-4 py-2 rounded-full bg-[#E50914] text-xs font-bold text-white hover:bg-[#B91C1C]"
+                  className="flex items-center space-x-2 px-4 py-2 rounded-full bg-[#E50914] text-xs font-bold text-white hover:bg-[#B91C1C] transition-colors"
                 >
                   <ExternalLink className="w-4 h-4" />
                   <span>Open Live App</span>

@@ -1,9 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Sparkles, Cpu, Code2, Database, Eye } from 'lucide-react';
 
 export default function HeroVisual() {
   const containerRef = useRef(null);
   const web3DRef = useRef(null);
   const coreRef = useRef(null);
+  const [activeTab, setActiveTab] = useState('AI / ML');
+  const [ripples, setRipples] = useState([]);
+  const [hoveredNode, setHoveredNode] = useState(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -16,20 +20,20 @@ export default function HeroVisual() {
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
 
-      // 3D Rotation Calculation
-      const rotX = (-y / (rect.height / 2)) * 25; // max 25 deg tilt
-      const rotY = (x / (rect.width / 2)) * 25;
+      // Dynamic 3D Tilt & Magnetic Attraction
+      const rotX = (-y / (rect.height / 2)) * 30; // 30 deg 3D tilt
+      const rotY = (x / (rect.width / 2)) * 30;
 
-      web.style.transform = `perspective(1200px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateZ(20px)`;
+      web.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateZ(30px)`;
       if (core) {
-        core.style.transform = `translateZ(60px) scale(1.1)`;
+        core.style.transform = `translateZ(70px) scale(1.1) rotateX(${(-rotX * 0.3).toFixed(2)}deg) rotateY(${(-rotY * 0.3).toFixed(2)}deg)`;
       }
     };
 
     const handleMouseLeave = () => {
-      web.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg) translateZ(0px)`;
+      web.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)`;
       if (core) {
-        core.style.transform = `translateZ(0px) scale(1)`;
+        core.style.transform = `translateZ(0px) scale(1) rotateX(0deg) rotateY(0deg)`;
       }
     };
 
@@ -42,104 +46,146 @@ export default function HeroVisual() {
     };
   }, []);
 
+  // Handle Interactive Click Energy Ripples
+  const handleContainerClick = (e) => {
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const newRipple = { id: Date.now(), x, y };
+
+    setRipples((prev) => [...prev.slice(-3), newRipple]);
+    setTimeout(() => {
+      setRipples((prev) => prev.filter((r) => r.id !== newRipple.id));
+    }, 1000);
+  };
+
+  const techNodes = [
+    { id: 'ml', label: 'Machine Learning', icon: Cpu, angle: 0, tag: 'XGBoost & Scikit' },
+    { id: 'python', label: 'Python Engine', icon: Code2, angle: 90, tag: 'FastAPI & NumPy' },
+    { id: 'data', label: 'Data Analytics', icon: Database, angle: 180, tag: 'Power BI & Pandas' },
+    { id: 'vision', label: 'Computer Vision', icon: Eye, angle: 270, tag: 'OpenCV & AI' },
+  ];
+
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[440px] lg:h-[560px] flex items-center justify-center overflow-hidden pointer-events-auto perspective-1000"
+      onClick={handleContainerClick}
+      className="relative w-full h-[460px] lg:h-[580px] flex items-center justify-center overflow-hidden pointer-events-auto cursor-pointer perspective-1000 select-none group"
     >
-      {/* Background Radial Glow */}
+      {/* Background Glow */}
       <div className="absolute inset-0 bg-radial from-transparent via-[#0A0A0B]/60 to-[#0A0A0B] pointer-events-none" />
 
-      {/* 3D Web Network Container */}
+      {/* Click Ripple Effect */}
+      {ripples.map((r) => (
+        <span
+          key={r.id}
+          style={{ left: r.x, top: r.y }}
+          className="absolute -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full border-2 border-[#E50914] animate-[ping_1s_cubic-bezier(0,0,0.2,1)_infinite] pointer-events-none z-30"
+        />
+      ))}
+
+      {/* 3D Interactive HUD Network */}
       <div
         ref={web3DRef}
         style={{ transformStyle: 'preserve-3d' }}
         className="relative w-[340px] h-[340px] sm:w-[440px] sm:h-[440px] lg:w-[500px] lg:h-[500px] transition-transform duration-200 ease-out flex items-center justify-center"
       >
-        {/* Layer 1: Backing 3D Ring Grid (Deep Z-offset) */}
+        {/* Ring 1: Outer Spinning HUD Compass */}
         <div
-          style={{ transform: 'translateZ(-40px)', transformStyle: 'preserve-3d' }}
-          className="absolute inset-0 flex items-center justify-center opacity-40"
+          style={{ transform: 'translateZ(-50px)', transformStyle: 'preserve-3d' }}
+          className="absolute inset-0 flex items-center justify-center opacity-30"
         >
-          <div className="w-full h-full rounded-full border border-dashed border-[#E50914]/30 animate-[spin_60s_linear_infinite]" />
+          <div className="w-full h-full rounded-full border-2 border-dashed border-[#E50914] animate-[spin_50s_linear_infinite]" />
         </div>
 
-        {/* Layer 2: Main Concentric Web SVG (Mid Z-offset) */}
-        <svg
-          viewBox="0 0 500 500"
-          className="w-full h-full text-slate-700/50 drop-shadow-[0_10px_30px_rgba(229,9,20,0.15)]"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.2"
-          style={{ transform: 'translateZ(10px)' }}
+        {/* Ring 2: Counter-Rotating Polygon HUD */}
+        <div
+          style={{ transform: 'translateZ(-20px)', transformStyle: 'preserve-3d' }}
+          className="absolute inset-8 flex items-center justify-center opacity-40"
         >
-          {/* Outer Web Octagon */}
-          <polygon
-            points="250,30 405,95 470,250 405,405 250,470 95,405 30,250 95,95"
-            className="stroke-slate-600/40"
-            strokeDasharray="6 6"
-          />
+          <div className="w-full h-full rounded-full border border-slate-700/60 animate-[spin_30s_linear_infinite_reverse]" />
+        </div>
 
-          {/* Inner 3D Concentric Polygon Layers */}
-          <polygon
-            points="250,70 377,123 430,250 377,377 250,430 123,377 70,250 123,123"
-            className="stroke-slate-600/60"
-          />
-          <polygon
-            points="250,110 348,151 390,250 348,348 250,390 151,348 110,250 151,151"
-            className="stroke-[#E50914]/40"
-          />
-          <polygon
-            points="250,150 320,180 350,250 320,320 250,350 180,320 150,250 180,180"
-            className="stroke-slate-500/70"
-          />
-          <polygon
-            points="250,190 291,209 310,250 291,291 250,310 209,291 190,250 209,209"
-            className="stroke-[#E50914]/80"
-            strokeWidth="1.8"
-          />
+        {/* Ring 3: Main Concentric Crimson Radar Orbital Rings */}
+        <div
+          style={{ transform: 'translateZ(10px)' }}
+          className="absolute inset-4 rounded-full border border-[#E50914]/40 flex items-center justify-center group-hover:border-[#E50914]/80 transition-colors duration-500"
+        >
+          <div className="w-[85%] h-[85%] rounded-full border border-slate-700/60 flex items-center justify-center">
+            <div className="w-[70%] h-[70%] rounded-full border border-dashed border-[#E50914]/50 flex items-center justify-center">
+              <div className="w-[50%] h-[50%] rounded-full border-2 border-[#E50914]/70 shadow-[0_0_20px_rgba(229,9,20,0.3)]" />
+            </div>
+          </div>
+        </div>
 
-          {/* Spider Web Radial Beams */}
-          <line x1="250" y1="250" x2="250" y2="30" className="stroke-slate-500/60" />
-          <line x1="250" y1="250" x2="405" y2="95" className="stroke-slate-500/60" />
-          <line x1="250" y1="250" x2="470" y2="250" className="stroke-[#E50914]/60" strokeWidth="1.5" />
-          <line x1="250" y1="250" x2="405" y2="405" className="stroke-slate-500/60" />
-          <line x1="250" y1="250" x2="250" y2="470" className="stroke-slate-500/60" />
-          <line x1="250" y1="250" x2="95" y2="405" className="stroke-slate-500/60" />
-          <line x1="250" y1="250" x2="30" y2="250" className="stroke-[#E50914]/60" strokeWidth="1.5" />
-          <line x1="250" y1="250" x2="95" y2="95" className="stroke-slate-500/60" />
+        {/* Interactive Orbiting Nodes */}
+        {techNodes.map((node) => {
+          const IconComp = node.icon;
+          const isHovered = hoveredNode === node.id;
 
-          {/* Glowing Red Nodes */}
-          <circle cx="250" cy="30" r="3.5" className="fill-slate-300" />
-          <circle cx="405" cy="95" r="4" className="fill-[#E50914]" />
-          <circle cx="470" cy="250" r="3.5" className="fill-slate-300" />
-          <circle cx="405" cy="405" r="4" className="fill-[#E50914]" />
-          <circle cx="250" cy="470" r="3.5" className="fill-slate-300" />
-          <circle cx="95" cy="405" r="4" className="fill-[#E50914]" />
-          <circle cx="30" cy="250" r="3.5" className="fill-slate-300" />
-          <circle cx="95" cy="95" r="4" className="fill-[#E50914]" />
-        </svg>
+          return (
+            <div
+              key={node.id}
+              onMouseEnter={() => setHoveredNode(node.id)}
+              onMouseLeave={() => setHoveredNode(null)}
+              style={{
+                transform: `rotate(${node.angle}deg) translate(180px) rotate(-${node.angle}deg) translateZ(40px)`,
+              }}
+              className="absolute z-20 transition-all duration-300"
+            >
+              <div
+                className={`p-3 rounded-full bg-[#121215] border ${
+                  isHovered ? 'border-[#E50914] bg-[#E50914] text-white scale-125 shadow-[0_0_25px_rgba(229,9,20,0.8)]' : 'border-[#27272A] text-slate-300 hover:border-[#E50914]'
+                } transition-all duration-300 shadow-xl flex items-center justify-center cursor-pointer`}
+              >
+                <IconComp className="w-4 h-4" />
+              </div>
 
-        {/* Layer 3: Elevated 3D Core AI Node (High Z-offset) */}
+              {/* Hover Tooltip Card */}
+              {isHovered && (
+                <div className="absolute top-12 left-1/2 -translate-x-1/2 bg-[#18181C] border border-[#E50914] rounded-lg px-3 py-1.5 whitespace-nowrap z-40 shadow-2xl animate-fade-in">
+                  <div className="text-[11px] font-bold font-display text-white">{node.label}</div>
+                  <div className="text-[9px] font-mono text-[#E50914]">{node.tag}</div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        {/* Layer 3: Elevated 3D Center Face Orb with Interactive Glowing Ring */}
         <div
           ref={coreRef}
-          style={{ transform: 'translateZ(50px)', transition: 'transform 0.2s ease-out' }}
-          className="absolute flex items-center justify-center"
+          style={{ transform: 'translateZ(60px)', transition: 'transform 0.2s ease-out' }}
+          className="absolute flex items-center justify-center z-10"
         >
-          <div className="w-16 h-16 rounded-full bg-[#E50914]/20 border border-[#E50914] flex items-center justify-center backdrop-blur-md shadow-[0_0_35px_rgba(229,9,20,0.6)]">
-            <div className="w-6 h-6 rounded-full bg-[#E50914] animate-ping opacity-75" />
-            <div className="w-4 h-4 rounded-full bg-white absolute" />
+          <div className="relative w-36 h-36 sm:w-44 sm:h-44 lg:w-48 lg:h-48 rounded-full border-4 border-[#E50914] p-1 bg-[#121215] shadow-[0_0_60px_rgba(229,9,20,0.6)] group-hover:shadow-[0_0_90px_rgba(229,9,20,0.9)] transition-shadow duration-500">
+            {/* Pulsing Radar Ring */}
+            <div className="absolute -inset-3 rounded-full border border-[#E50914]/60 animate-ping pointer-events-none opacity-40" />
+            <div className="absolute -inset-6 rounded-full border border-dashed border-[#E50914]/30 pointer-events-none" />
+
+            <div className="w-full h-full rounded-full overflow-hidden bg-[#0A0A0B] relative">
+              <img
+                src="/nav_face.jpg"
+                alt="Purushotham Balamurali"
+                className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500 ease-out"
+              />
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Floating 3D Badge Overlay */}
+      {/* Interactive Bottom Control Bar */}
       <div
-        style={{ transform: 'translateZ(40px)' }}
-        className="absolute bottom-6 right-6 lg:bottom-12 lg:right-12 bg-[#121215]/90 backdrop-blur-xl border border-[#27272A] rounded-xl px-4 py-2.5 flex items-center space-x-3 text-xs shadow-2xl"
+        style={{ transform: 'translateZ(50px)' }}
+        className="absolute bottom-4 sm:bottom-6 right-4 sm:right-6 bg-[#121215]/95 backdrop-blur-xl border border-[#27272A] rounded-2xl px-4 py-2.5 flex items-center space-x-3 text-xs shadow-2xl z-30"
       >
-        <span className="w-2.5 h-2.5 rounded-full bg-[#E50914] animate-pulse" />
-        <span className="font-mono text-slate-200">Interactive 3D Engine</span>
+        <span className="w-2.5 h-2.5 rounded-full bg-[#E50914] animate-ping" />
+        <div className="flex items-center space-x-2">
+          <span className="font-mono text-slate-200 font-bold">Purushotham Balamurali</span>
+          <span className="text-[10px] font-mono text-slate-400 bg-[#18181C] px-2 py-0.5 rounded-md border border-[#27272A] hidden sm:inline">
+            Interactive 3D HUD
+          </span>
+        </div>
       </div>
     </div>
   );

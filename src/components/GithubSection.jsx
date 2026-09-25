@@ -11,7 +11,7 @@ export default function GithubSection() {
     async function fetchGithubRepos() {
       try {
         const response = await fetch(
-          `https://api.github.com/users/${personalInfo.githubHandle}/repos?sort=updated&per_page=6`
+          `https://api.github.com/users/${personalInfo.githubHandle}/repos?sort=updated&per_page=9`
         );
         if (!response.ok) throw new Error('GitHub API fetch failed');
         const data = await response.json();
@@ -29,6 +29,14 @@ export default function GithubSection() {
 
   // Fallback repo data if API rate limit or offline
   const fallbackRepos = [
+    {
+      name: 'CivicAI',
+      description: 'AI-Powered Mobile Urban Intelligence Platform using transit fleet cameras with Bayesian consensus.',
+      language: 'Python',
+      stargazers_count: 0,
+      forks_count: 0,
+      html_url: 'https://github.com/pbalamurali74-hue/CivicAI',
+    },
     {
       name: 'TurboFan-Degradation-ML-Project',
       description: 'Predictive maintenance modeling using NASA C-MAPSS time-series dataset.',
@@ -60,6 +68,14 @@ export default function GithubSection() {
       stargazers_count: 0,
       forks_count: 0,
       html_url: 'https://github.com/pbalamurali74-hue/MatrixOperations',
+    },
+    {
+      name: 'FUTURE_ML_03',
+      description: 'Intent-Based NLP Conversational Bot with TF-IDF, sentiment analysis and Flask web UI.',
+      language: 'Python',
+      stargazers_count: 0,
+      forks_count: 0,
+      html_url: 'https://github.com/pbalamurali74-hue/FUTURE_ML_03',
     },
     {
       name: 'forage-midas',

@@ -2,12 +2,13 @@ import React, { useRef } from 'react';
 import { skillsData } from '../data/portfolioData';
 import { useGsapContext } from '../hooks/useGsapContext';
 import Tilt3D from './Tilt3D';
-import { Cpu, Code, Layers, Wrench } from 'lucide-react';
+import { Cpu, Code, Layers, Wrench, Database } from 'lucide-react';
 
 const categoryIcons = {
   Programming: Code,
   'AI / ML & Data Science': Cpu,
   'Development & Frameworks': Layers,
+  'Tools & Databases': Database,
   'Tools & Analytics': Wrench,
 };
 

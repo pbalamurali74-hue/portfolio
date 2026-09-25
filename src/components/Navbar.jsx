@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, FileText, Github, ArrowUpRight } from 'lucide-react';
+import { Menu, X, FileText, Github } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
 
 export default function Navbar() {
@@ -37,15 +37,19 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Brand Logo / Name */}
+        {/* Brand Logo with User Face Avatar Icon */}
         <a
           href="#"
-          className="group flex items-center space-x-3 text-white font-display text-lg tracking-wider font-bold"
+          className="group flex items-center space-x-3 text-white font-display text-base sm:text-lg tracking-wider font-bold"
         >
-          <span className="w-8 h-8 rounded-full border border-[#E50914] bg-[#0A0A0B] flex items-center justify-center text-xs font-mono font-bold text-[#E50914] group-hover:bg-[#E50914] group-hover:text-white transition-colors duration-300">
-            PB
-          </span>
-          <span className="group-hover:text-[#E50914] transition-colors duration-300">
+          <div className="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full overflow-hidden border-2 border-[#E50914] shadow-md shadow-[#E50914]/30 group-hover:scale-105 transition-transform duration-300 shrink-0">
+            <img
+              src="/nav_face.jpg"
+              alt="Purushotham Balamurali"
+              className="w-full h-full object-cover object-top"
+            />
+          </div>
+          <span className="group-hover:text-[#E50914] transition-colors duration-300 whitespace-nowrap">
             Purushotham <span className="text-slate-400 font-light hidden sm:inline">Balamurali</span>
           </span>
         </a>
