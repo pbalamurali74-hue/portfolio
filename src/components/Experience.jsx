@@ -19,10 +19,10 @@ export default function Experience() {
             <span className="w-8 h-[2px] bg-[#E50914]" />
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold font-display text-white tracking-tight">
-            INTERNSHIPS & VIRTUAL PROGRAMS
+            INTERNSHIPS & HACKATHONS
           </h2>
           <p className="text-slate-400 text-sm sm:text-base">
-            Verified machine learning internship experience and software engineering virtual programs.
+            Verified machine learning internships, national hackathon systems (GEOIMPathon, SIH), and industry engineering programs.
           </p>
         </div>
 

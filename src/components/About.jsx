@@ -102,7 +102,7 @@ export default function About() {
               </div>
               <div className="bg-[#121215] border border-[#27272A] rounded-xl p-4">
                 <div className="text-xs text-slate-400 font-mono uppercase mb-1">Primary Stack</div>
-                <div className="text-sm font-bold text-[#E50914]">Python • Scikit • XGBoost</div>
+                <div className="text-sm font-bold text-[#E50914]">Python • PyTorch • AI/ML</div>
               </div>
               <div className="bg-[#121215] border border-[#27272A] rounded-xl p-4 col-span-2 sm:col-span-1">
                 <div className="text-xs text-slate-400 font-mono uppercase mb-1">Approach</div>

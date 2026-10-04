@@ -7,15 +7,37 @@ export default function GithubSection() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  const repoDescriptions = {
+    'geoshield-flood-intelligence': 'GEOSHIELD: Flood Exposure & Emergency Decision Intelligence — Real-world SAR Change Detection & Explainable Exposure Analytics (GEOIMPathon 1.0)',
+    'geoimpathon-multi-hazard-dss': 'GEOIMPATHON 1.0 (Problem Statement 1.1) - Multi-Hazard Decision Support System & Least-Risk Emergency Routing (Cyclone Michaung Flood Validation)',
+    'Turbofan-Engine-RUL-Prediction': 'NASA C-MAPSS Remaining Useful Life Prediction using Linear Regression, Random Forest, XGBoost, and PyTorch LSTM (14.72 RMSE) with Streamlit console.',
+    'ToDo-LIST-API': 'Secure FastAPI REST service featuring dual JWT token sessions (15-min access / 7-day refresh), Pydantic validation, and slowapi rate limiting.',
+    'customer-churn-prediction': 'Customer Churn Prediction system featuring XGBoost, Random Forest, interactive Streamlit What-If simulator, and Power BI dashboard.',
+    'CivicAI': 'Smart India Hackathon 2026 (PS 26124) — AI-powered urban road distress and hazard detection using transit camera fleets at 45 FPS.',
+    'sales-forecasting-powerbi': 'Superstore Sales Forecasting with 12-month Prophet confidence intervals and Power BI executive retail intelligence dashboard.',
+    'customer-support-ai-chatbot': 'Intent-Based NLP Conversational Bot with structured taxonomy, TF-IDF vectorization, confidence threshold guardrails, and Flask UI.',
+    'Python-Leetcode-Submissions': 'Curated repository of optimized Python solutions for LeetCode and Data Structures & Algorithms interview preparation.',
+    'forage-midas': 'JPMorgan Chase & Co. Advanced Software Engineering Forage program — Apache Kafka transaction consumer and Spring Data JPA persistence.',
+    'MatrixOperations': 'Modular Python & NumPy matrix calculation tool with Tkinter GUI, CLI engine, and 17/17 Pytest automated test coverage.',
+    'portfolio': 'Purushotham Balamurali — Premium AI/ML Developer & Data Science Interactive 3D Portfolio built with React, GSAP, and Tailwind.'
+  };
+
   useEffect(() => {
     async function fetchGithubRepos() {
       try {
         const response = await fetch(
-          `https://api.github.com/users/${personalInfo.githubHandle}/repos?sort=updated&per_page=9`
+          `https://api.github.com/users/${personalInfo.githubHandle}/repos?sort=updated&per_page=30`
         );
         if (!response.ok) throw new Error('GitHub API fetch failed');
         const data = await response.json();
-        setRepos(data);
+        const ignored = new Set(['keepalive', 'app.py', 'pbalamurali74-hue']);
+        const enriched = data
+          .filter((r) => !ignored.has(r.name))
+          .map((r) => ({
+            ...r,
+            description: r.description || repoDescriptions[r.name] || 'Verified Python & AI repository by Purushotham Balamurali.',
+          }));
+        setRepos(enriched);
       } catch (err) {
         console.warn('GitHub API fallback activated:', err);
         setError(true);
@@ -30,68 +52,92 @@ export default function GithubSection() {
   // Fallback repo data if API rate limit or offline
   const fallbackRepos = [
     {
-      name: 'CivicAI',
-      description: 'AI-Powered Mobile Urban Intelligence Platform using transit fleet cameras with Bayesian consensus.',
+      name: 'geoshield-flood-intelligence',
+      description: 'GEOSHIELD: Flood Exposure & Emergency Decision Intelligence — Real-world SAR Change Detection & Explainable Exposure Analytics (GEOIMPathon 1.0)',
+      language: 'TypeScript',
+      stargazers_count: 0,
+      forks_count: 0,
+      html_url: 'https://github.com/pbalamurali74-hue/geoshield-flood-intelligence',
+    },
+    {
+      name: 'geoimpathon-multi-hazard-dss',
+      description: 'GEOIMPATHON 1.0 (Problem Statement 1.1) - Multi-Hazard Decision Support System & Least-Risk Emergency Routing (Cyclone Michaung Flood Validation)',
       language: 'Python',
       stargazers_count: 0,
       forks_count: 0,
-      html_url: 'https://github.com/pbalamurali74-hue/CivicAI',
+      html_url: 'https://github.com/pbalamurali74-hue/geoimpathon-multi-hazard-dss',
     },
     {
-      name: 'TurboFan-Degradation-ML-Project',
-      description: 'Predictive maintenance modeling using NASA C-MAPSS time-series dataset.',
-      language: 'Jupyter Notebook',
+      name: 'Turbofan-Engine-RUL-Prediction',
+      description: 'NASA C-MAPSS Remaining Useful Life Prediction using Linear Regression, Random Forest, XGBoost, and PyTorch LSTM (14.72 RMSE) with Streamlit console.',
+      language: 'Python',
       stargazers_count: 0,
       forks_count: 0,
-      html_url: 'https://github.com/pbalamurali74-hue/TurboFan-Degradation-ML-Project',
+      html_url: 'https://github.com/pbalamurali74-hue/Turbofan-Engine-RUL-Prediction',
     },
     {
       name: 'ToDo-LIST-API',
-      description: 'Secure FastAPI REST service with dual JWT authentication and rate limiting.',
+      description: 'Secure FastAPI REST service featuring dual JWT token sessions (15-min access / 7-day refresh), Pydantic validation, and slowapi rate limiting.',
       language: 'Python',
       stargazers_count: 0,
       forks_count: 0,
       html_url: 'https://github.com/pbalamurali74-hue/ToDo-LIST-API',
     },
     {
-      name: 'FUTURE_ML_02',
-      description: 'Customer Churn Prediction system with Streamlit GUI & Power BI Dashboard.',
-      language: 'Jupyter Notebook',
-      stargazers_count: 0,
-      forks_count: 0,
-      html_url: 'https://github.com/pbalamurali74-hue/FUTURE_ML_02',
-    },
-    {
-      name: 'MatrixOperations',
-      description: 'Modular Python & NumPy matrix calculation tool with Tkinter GUI & CLI mode.',
+      name: 'customer-churn-prediction',
+      description: 'Customer Churn Prediction system featuring XGBoost, Random Forest, interactive Streamlit What-If simulator, and Power BI dashboard.',
       language: 'Python',
       stargazers_count: 0,
       forks_count: 0,
-      html_url: 'https://github.com/pbalamurali74-hue/MatrixOperations',
+      html_url: 'https://github.com/pbalamurali74-hue/customer-churn-prediction',
     },
     {
-      name: 'FUTURE_ML_03',
-      description: 'Intent-Based NLP Conversational Bot with TF-IDF, sentiment analysis and Flask web UI.',
+      name: 'CivicAI',
+      description: 'Smart India Hackathon 2026 (PS 26124) — AI-powered urban road distress and hazard detection using transit camera fleets at 45 FPS.',
+      language: 'TypeScript',
+      stargazers_count: 0,
+      forks_count: 0,
+      html_url: 'https://github.com/pbalamurali74-hue/CivicAI',
+    },
+    {
+      name: 'sales-forecasting-powerbi',
+      description: 'Superstore Sales Forecasting with 12-month Prophet confidence intervals and Power BI executive retail intelligence dashboard.',
       language: 'Python',
       stargazers_count: 0,
       forks_count: 0,
-      html_url: 'https://github.com/pbalamurali74-hue/FUTURE_ML_03',
+      html_url: 'https://github.com/pbalamurali74-hue/sales-forecasting-powerbi',
+    },
+    {
+      name: 'customer-support-ai-chatbot',
+      description: 'Intent-Based NLP Conversational Bot with structured taxonomy, TF-IDF vectorization, confidence threshold guardrails, and Flask UI.',
+      language: 'Python',
+      stargazers_count: 0,
+      forks_count: 0,
+      html_url: 'https://github.com/pbalamurali74-hue/customer-support-ai-chatbot',
+    },
+    {
+      name: 'Python-Leetcode-Submissions',
+      description: 'Curated repository of optimized Python solutions for LeetCode and Data Structures & Algorithms interview preparation.',
+      language: 'Python',
+      stargazers_count: 0,
+      forks_count: 0,
+      html_url: 'https://github.com/pbalamurali74-hue/Python-Leetcode-Submissions',
     },
     {
       name: 'forage-midas',
-      description: 'JPMorgan Chase & Co. Advanced Software Engineering Forage program repository.',
+      description: 'JPMorgan Chase & Co. Advanced Software Engineering Forage program — Apache Kafka transaction consumer and Spring Data JPA persistence.',
       language: 'Java',
       stargazers_count: 0,
       forks_count: 0,
       html_url: 'https://github.com/pbalamurali74-hue/forage-midas',
     },
     {
-      name: 'FUTURE_ML_01',
-      description: 'Superstore Sales Forecasting & Power BI Retail Analytics Dashboard.',
-      language: 'Jupyter Notebook',
+      name: 'MatrixOperations',
+      description: 'Modular Python & NumPy matrix calculation tool with Tkinter GUI, CLI engine, and 17/17 Pytest automated test coverage.',
+      language: 'Python',
       stargazers_count: 0,
       forks_count: 0,
-      html_url: 'https://github.com/pbalamurali74-hue/FUTURE_ML_01',
+      html_url: 'https://github.com/pbalamurali74-hue/MatrixOperations',
     },
   ];
 

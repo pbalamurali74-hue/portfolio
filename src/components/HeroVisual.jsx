@@ -60,10 +60,10 @@ export default function HeroVisual() {
   };
 
   const techNodes = [
-    { id: 'ml', label: 'Machine Learning', icon: Cpu, angle: 0, tag: 'XGBoost & Scikit' },
-    { id: 'python', label: 'Python Engine', icon: Code2, angle: 90, tag: 'FastAPI & NumPy' },
-    { id: 'data', label: 'Data Analytics', icon: Database, angle: 180, tag: 'Power BI & Pandas' },
-    { id: 'vision', label: 'Computer Vision', icon: Eye, angle: 270, tag: 'OpenCV & AI' },
+    { id: 'ml', label: 'Deep Learning & ML', icon: Cpu, angle: 0, tag: 'PyTorch • XGBoost • Scikit' },
+    { id: 'python', label: 'Backend Engine', icon: Code2, angle: 90, tag: 'FastAPI • Pydantic • REST' },
+    { id: 'data', label: 'Data & Analytics', icon: Database, angle: 180, tag: 'Power BI • Pandas • Prophet' },
+    { id: 'vision', label: 'Geospatial & Vision', icon: Eye, angle: 270, tag: 'Sentinel-1 SAR • YOLO' },
   ];
 
   return (
